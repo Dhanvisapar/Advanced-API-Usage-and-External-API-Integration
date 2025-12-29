@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Task 7 - External API</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #ffe600;
+      padding: 30px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Weather App (External API)</h1>
+
+<input id="city" placeholder="Enter city">
+<button onclick="getWeather()">Get Weather</button>
+
+<div id="result"></div>
+
+<script>
+function getWeather() {
+  const city = document.getElementById("city").value;
+
+  fetch(`/weather?city=${city}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.error) {
+        document.getElementById("result").innerText = data.error;
+      } else {
+        document.getElementById("result").innerText =
+          `City: ${data.city}, Temp: ${data.temp}°C, Weather: ${data.weather}`;
+      }
+    })
+    .catch(() => {
+      document.getElementById("result").innerText = "Error fetching data";
+    });
+}
+</script>
+
+</body>
+</html>
